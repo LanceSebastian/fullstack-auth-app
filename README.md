@@ -1,16 +1,76 @@
-# React + Vite
+# Fullstack Auth App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fullstack authentication app built with React, Vite, Tailwind CSS, Express, and PostgreSQL.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js
+- PostgreSQL
 
-## React Compiler
+## Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. Clone the repo and install frontend dependencies
 
-## Expanding the ESLint configuration
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 2. Install backend dependencies
+
+```bash
+cd server
+npm install
+```
+
+### 3. Create the environment file
+
+Create a `.env` file in the project root:
+
+```
+PORT=5000
+CLIENT_URL=http://localhost:5173
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=yourpassword
+DB_NAME=auth_app
+JWT_SECRET=changethis
+```
+
+### 4. Set up the database
+
+Open SQL Shell (psql) and run:
+
+```sql
+CREATE DATABASE auth_app;
+\c auth_app
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+```
+
+### 5. Run the app
+
+In one terminal, start the backend:
+
+```bash
+node server/index.js
+```
+
+In another terminal, start the frontend:
+
+```bash
+npm run dev
+```
+
+Then open `http://localhost:5173` in your browser.
+
+## TODO
+
+- [ ] **Secure token storage** — move JWT from `localStorage` to `httpOnly` cookies so JavaScript can't access the token (more secure against XSS attacks)
+- [ ] **Protected routes** — check for token on the `/home` route and redirect to `/` if missing, so unauthenticated users can't access it directly
+- [ ] **Frontend error handling** — display error messages from the backend (e.g. "User already exists", "Invalid credentials") in the UI instead of silently failing
+- [ ] **Deployment** — host the database (Supabase/Neon/Railway), backend (Render/Railway/Fly.io), and frontend (Vercel/Netlify), and update environment variables accordingly

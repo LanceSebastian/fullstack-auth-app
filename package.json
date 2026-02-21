@@ -1,8 +1,20 @@
 {
   "name": "fullstack-auth-app",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "homepage": "https://github.com/LanceSebastian/fullstack-auth-app#readme",
+  "bugs": {
+    "url": "https://github.com/LanceSebastian/fullstack-auth-app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LanceSebastian/fullstack-auth-app.git"
+  },
+  "license": "ISC",
+  "author": "Lance Sebastian",
   "type": "module",
+  "main": "index.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
